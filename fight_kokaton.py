@@ -96,7 +96,7 @@ class Beam:
         """
         self.img = pg.image.load(f"fig/beam.png") #Surface
         self.rct = self.img.get_rect() #rect
-        self.rct.centery = bird.rct.centery #ビームの中心座標=こうかとんの中心座標
+        self.rct.center = bird.rct.center #ビームの中心座標=こうかとんの中心座標
         self.rct.left = bird.rct.right # ビームの左座標=こうかとんの右座標
         self.vx, self.vy = +5, 0
 
@@ -189,7 +189,7 @@ def main():
         if beam is not None:  #ビームが存在していたら
             beam.update(screen)
         for bomb in bombs:  # 爆弾が存在していたら
-                bomb.update(screen)
+                bomb.update(screen) 
         pg.display.update()
         tmr += 1
         clock.tick(50)
