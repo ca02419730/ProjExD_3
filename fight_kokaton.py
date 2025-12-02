@@ -145,6 +145,7 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
     bg_img = pg.image.load("fig/pg_bg.jpg")
     bird = Bird((300, 200))
+    # bomb = ()
     bomb = Bomb((255, 0, 0), 10)
     beam = None  # ゲーム初期化時にはビームは存在しない
     clock = pg.time.Clock()
@@ -169,6 +170,28 @@ def main():
         bird.update(key_lst, screen)
         # beam.update(screen)   
         bomb.update(screen)
+        if bomb is not None:
+            if bird.rct.colliderect(bomb.rct):
+            # ゲームオーバー時に，こうかとん画像を切り替え，1秒間表示させる
+                bird.change_img(8, screen)
+                pg.display.update()
+                time.sleep(1)
+                return
+    #for b, bomb in enumerate(bombs):
+        if bomb is not None:
+            if beam is not None:    
+                if beam.rct.colliderect(bomb.rct):
+                    # ビームが爆弾に当たったら，爆弾とビームを消す
+                    beam = None
+                    bomb = None
+            # bird.change_img(6, screen)
+
+        key_lst = pg.key.get_pressed()
+        bird.update(key_lst, screen)
+        if beam is not None:  #ビームが存在していたら
+            beam.update(screen)
+        if bomb is not None:  # 爆弾が存在していたら
+            bomb.update(screen)
         pg.display.update()
         tmr += 1
         clock.tick(50)
